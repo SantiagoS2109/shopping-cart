@@ -26,6 +26,12 @@ function ShoppingCart() {
 
     const discount = coupons.find((coupon) => coupon.code === currentCoupon);
 
+    if (!discount) {
+      alert("Coupon not found");
+      setCurrentCoupon("");
+      return;
+    }
+
     dispatch({ type: "discount", payload: discount });
     setCurrentCoupon("");
   }
@@ -43,7 +49,10 @@ function ShoppingCart() {
             <li className="text-center text-sm">No items in cart</li>
           )}
           {items.map((item) => (
-            <ShoppingCartItem key={item.id} item={item} />
+            <ShoppingCartItem
+              key={`item-${item.id}-${item.size}`}
+              item={item}
+            />
           ))}
         </ul>
 
