@@ -11,6 +11,7 @@ function ProductCard({ product }) {
 
   function handleAddToCart(e) {
     e.preventDefault();
+    // console.log("Adding to cart", product, size);
 
     dispatch({ type: "add", payload: { ...product, quantity: 1, size: size } });
   }
@@ -33,7 +34,7 @@ function ProductCard({ product }) {
         <p className="mb-6 text-sm">{product.description}</p>
       </div>
 
-      <form onSubmit={handleAddToCart} className="mt-auto flex justify-between">
+      <form className="mt-auto flex justify-between">
         <select
           className="w-18 rounded-md bg-slate-200 p-2 text-xs font-bold outline-none transition-all duration-300 focus:ring-1 focus:ring-greenBrand focus:ring-offset-2"
           name="sizeSelect"
@@ -47,7 +48,7 @@ function ProductCard({ product }) {
           <option value="XL">XL</option>
         </select>
 
-        <Button>Add to cart</Button>
+        <Button onClick={handleAddToCart}>Add to cart</Button>
       </form>
     </li>
   );
