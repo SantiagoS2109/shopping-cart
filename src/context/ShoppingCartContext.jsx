@@ -5,17 +5,22 @@ import { createContext } from "react";
 
 const ShoppingCartContext = createContext();
 
-const initialState = { items: [] };
+const initialState = { items: [], discount: {} };
 
 function reducer(state, action) {
   switch (action.type) {
     case "add": {
-      if (state.items.find((item) => item.id === action.payload.id))
+      if (
+        state.items.find(
+          (item) =>
+            item.id === action.payload.id && item.size === action.payload.size,
+        )
+      )
         return {
           ...state,
           items: state.items.map((item) =>
-            item.id === action.payload.id
-              ? { ...item, quantity: item.quantity + 1 }
+            item.id === action.payload.id && item.size === action.payload.size
+              ? { ...item, quantity: item.quantity++, size: item.size }
               : item,
           ),
         };
@@ -29,7 +34,25 @@ function reducer(state, action) {
     case "remove": {
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.payload.id),
+        items: state.items.filter(
+          (item) =>
+            item.id !== action.payload.id || item.size !== action.payload.size,
+        ),
+      };
+    }
+
+    case "removeAll": {
+      return {
+        ...state,
+        items: [],
+        discount: {},
+      };
+    }
+
+    case "discount": {
+      return {
+        ...state,
+        discount: action.payload,
       };
     }
 

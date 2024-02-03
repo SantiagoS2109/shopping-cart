@@ -1,14 +1,18 @@
 /* eslint-disable react/prop-types */
 
+import { useState } from "react";
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import Button from "./ui/Button";
 
 function ProductCard({ product }) {
   const { dispatch } = useShoppingCart();
 
+  const [size, setSize] = useState("S");
+
   function handleAddToCart(e) {
     e.preventDefault();
 
-    dispatch({ type: "add", payload: { ...product, quantity: 1 } });
+    dispatch({ type: "add", payload: { ...product, quantity: 1, size: size } });
   }
 
   return (
@@ -29,22 +33,21 @@ function ProductCard({ product }) {
         <p className="mb-6 text-sm">{product.description}</p>
       </div>
 
-      <form className="mt-auto flex justify-between">
+      <form onSubmit={handleAddToCart} className="mt-auto flex justify-between">
         <select
-          className="w-12 rounded-md bg-slate-200 p-2 font-bold outline-none transition-all duration-300 focus:ring-1 focus:ring-greenBrand focus:ring-offset-2"
+          className="w-18 rounded-md bg-slate-200 p-2 text-xs font-bold outline-none transition-all duration-300 focus:ring-1 focus:ring-greenBrand focus:ring-offset-2"
           name="sizeSelect"
           id="size"
+          value={size}
+          onChange={(e) => setSize(e.target.value)}
         >
-          <option value="small">S</option>
-          <option value="medium">M</option>
-          <option value="large">L</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
         </select>
-        <button
-          onClick={handleAddToCart}
-          className="rounded-md bg-greenBrand px-2 py-1 text-xs font-medium text-white"
-        >
-          Añadir al carrito
-        </button>
+
+        <Button>Add to cart</Button>
       </form>
     </li>
   );

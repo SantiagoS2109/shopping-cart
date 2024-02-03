@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import Button from "./ui/Button";
 
 function ShoppingCartItem({ item }) {
   const { dispatch } = useShoppingCart();
@@ -11,17 +12,18 @@ function ShoppingCartItem({ item }) {
         <h3 className="text-sm">
           <span className="font-bold">{item.quantity}x</span> {item.name}
         </h3>
-        <p className="text-sm">Talla: S</p>
+        <p className="text-sm">Talla: {item.size}</p>
       </div>
 
       <div className="flex items-center gap-4">
         <span className="text-sm font-bold">{item.price} $</span>
-        <button
+        <Button
           onClick={() => dispatch({ type: "remove", payload: item })}
-          className="block rounded-md bg-greenBrand px-4 py-2 text-xs font-medium text-white transition-all duration-200 hover:bg-red-400"
+          type="danger"
+          aditionalStyle={"text-sm px-3 py-2"}
         >
           Remove
-        </button>
+        </Button>
       </div>
     </li>
   );
