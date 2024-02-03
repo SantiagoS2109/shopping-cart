@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useShoppingCart } from "../context/ShoppingCartContext";
-import Button from "./ui/Button";
+// import Button from "./ui/Button";
 
 function ProductCard({ product }) {
   const { dispatch } = useShoppingCart();
@@ -11,7 +11,6 @@ function ProductCard({ product }) {
 
   function handleAddToCart(e) {
     e.preventDefault();
-    // console.log("Adding to cart", product, size);
 
     dispatch({ type: "add", payload: { ...product, quantity: 1, size: size } });
   }
@@ -34,7 +33,7 @@ function ProductCard({ product }) {
         <p className="mb-6 text-sm">{product.description}</p>
       </div>
 
-      <form className="mt-auto flex justify-between">
+      <form onSubmit={handleAddToCart} className="mt-auto flex justify-between">
         <select
           className="w-18 rounded-md bg-slate-200 p-2 text-xs font-bold outline-none transition-all duration-300 focus:ring-1 focus:ring-greenBrand focus:ring-offset-2"
           name="sizeSelect"
@@ -48,7 +47,13 @@ function ProductCard({ product }) {
           <option value="XL">XL</option>
         </select>
 
-        <Button onClick={handleAddToCart}>Add to cart</Button>
+        <button
+          className="rounded-md bg-greenBrand px-2 py-1 text-xs font-medium text-white outline-none ring-greenBrand/80 ring-offset-2 transition-all duration-300 hover:bg-greenBrandHover focus:ring"
+          type="submit"
+        >
+          Add to cart
+        </button>
+        {/* <Button>Add to cart</Button> */}
       </form>
     </li>
   );
